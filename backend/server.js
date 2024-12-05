@@ -19,6 +19,19 @@ app.get('/', (request, response) => {
     response.json({ info: 'Todo-list using Node.js, Express, and Postgres API' })
   })
 
+// Route to get all the tasks
+app.get('/tasks', async function(req, res) {
+    try{
+        const result = await pool.query(
+            'SELECT * FROM tasks'
+        );
+    } catch(err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Route to add a specific task
 app.post('/tasks', async function (req, res) {
   const { name } = req.body;
   try {
@@ -29,7 +42,7 @@ app.post('/tasks', async function (req, res) {
     res.status(201).json(result.rows[0]); 
   } catch (err) {
     console.error(err);
-    res.status(500).send('Erreur serveur');
+    res.status(500).send('Server error');
   }
 });
 
