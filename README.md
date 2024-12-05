@@ -15,16 +15,23 @@ Before you begin, ensure you have the following installed:
 
 1. Open your PostgreSQL
 2. Create a new database: ```CREATE DATABASE task_manager;```
-3. Inside the `backend` directory, create a `.env` file: ```DB_USER=your_postgres_username
+3. Inside the `backend` directory, create a `.env` file: 
+```
+DB_USER=your_postgres_username
 DB_PASSWORD=your_postgres_password
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=task_manager```
-4. Initialize the database table: ```sql CREATE TABLE tasks (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    completed BOOLEAN DEFAULT FALSE
-);```
+DB_NAME=task_manager
+```
+4. Initialize the database table: 
+
+```sql 
+CREATE TABLE tasks (
+id SERIAL PRIMARY KEY,
+name TEXT NOT NULL,
+completed BOOLEAN DEFAULT FALSE
+);
+```
 
 ### 3. Start the Backend
 1. Navigate to the `backend` directory and enter : `npm install`
