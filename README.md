@@ -33,10 +33,10 @@ completed BOOLEAN DEFAULT FALSE
 );
 ```
 
-### 3. Start the Backend
+### 2. Start the Backend
 1. Navigate to the `backend` directory and enter : `npm install`
 2. Start the server : `npm start` (It will run on http://localhost:5000)
 
-### 4. Start the Frontend
+### 3. Start the Frontend
 1. Navigate to the `frontend` directory and enter : `npm install`
 2. Start the React app: `npm start` (It will run on http://localhost:3000)
