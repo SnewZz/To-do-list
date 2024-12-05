@@ -53,21 +53,33 @@ app.post('/tasks', async function (req, res) {
   }
 });
 
-  // Route to update a specific task (mark task as completed)
-  app.put('/tasks/:id', async (req, res) => {
+// Route to update a specific task (mark task as completed)
+app.put('/tasks/:id', async (req, res) => {
     try {
-      const { id } = req.params;
-      const { completed } = req.body;
-      const updateTask = await pool.query(
-        'UPDATE tasks SET completed = $1 WHERE id = $2 RETURNING *',
-        [completed, id]
-      );
-      res.json(updateTask.rows[0]);
+        const { id } = req.params;
+        const { completed } = req.body;
+        const updateTask = await pool.query(
+            'UPDATE tasks SET completed = $1 WHERE id = $2 RETURNING *',
+            [completed, id]
+        );
+        res.json(updateTask.rows[0]);
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
-  });
+});
+
+// Route to delete a specific task
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM tasks WHERE id = $1', [id]);
+        res.json({ message: 'Tâche supprimée avec succès' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erreur du serveur');
+    }
+});
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
