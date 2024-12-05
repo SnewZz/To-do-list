@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cors = require('cors')
 const { Pool } = require('pg');
 const express = require('express');
@@ -50,6 +51,22 @@ app.post('/tasks', async function (req, res) {
     res.status(500).send('Server error');
   }
 });
+
+  // Route to update a specific task (mark task as completed)
+  app.put('/tasks/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { completed } = req.body;
+      const updateTask = await pool.query(
+        'UPDATE tasks SET completed = $1 WHERE id = $2 RETURNING *',
+        [completed, id]
+      );
+      res.json(updateTask.rows[0]);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  });
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

@@ -18,12 +18,22 @@ const TaskList = () => {
         e.preventDefault();
         if (newTask.trim() === '') return;
         axios.post('http://localhost:5000/tasks', { name: newTask })
-          .then(response => {
-            setTasks([...tasks, response.data]);
-            setNewTask('');
-          })
-          .catch(error => console.error('Error while adding new task', error));
-      };
+            .then(response => {
+                setTasks([...tasks, response.data]);
+                setNewTask('');
+            })
+            .catch(error => console.error('Error while adding new task', error));
+    };
+    
+    const handleMarkComplete = (id) => {
+        axios.put(`http://localhost:5000/tasks/${id}`, { completed: true })
+            .then(response => {
+                setTasks(tasks.map(task =>
+                    task.id === id ? { ...task, completed: true } : task
+                ));
+            })
+            .catch(error => console.error('Error while updating the task', error));
+    };
 
   return (
     <div>
@@ -43,8 +53,12 @@ const TaskList = () => {
             {tasks.map(task => (
                 <li key={task.id}>
                     {task.name} - {task.completed ? 'Terminé' : 'En cours'}
+                    {!task.completed && (
+                        <button onClick={() => handleMarkComplete(task.id)}>Terminer</button>
+                    )}
                 </li>
             ))}
+            
         </ul>
     </div>
   );
