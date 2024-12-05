@@ -29,7 +29,7 @@ const TaskList = () => {
 
   const handleMarkComplete = (id) => {
     axios.put(`http://localhost:5000/tasks/${id}`, { completed: true })
-      .then(response => {
+      .then(() => {
         setTasks(tasks.map(task =>
           task.id === id ? { ...task, completed: true } : task
         ));
@@ -46,15 +46,14 @@ const TaskList = () => {
   };
 
   return (
-    <div>
-      <h1>To-do list</h1>
+    <div className="container mt-4">
       <TaskForm
         newTask={newTask}
         setNewTask={setNewTask}
         handleSubmit={handleSubmit}
       />
-      <h1>Liste des Tâches</h1>
-      <ul>
+      <h2 className="mb-3">Liste des Tâches</h2>
+      <ul className="list-group">
         {tasks.map(task => (
           <TaskItem
             key={task.id}
