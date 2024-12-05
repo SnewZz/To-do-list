@@ -35,6 +35,14 @@ const TaskList = () => {
             .catch(error => console.error('Error while updating the task', error));
     };
 
+    const handleDeleteTask = (id) => {
+        axios.delete(`http://localhost:5000/tasks/${id}`)
+            .then(() => {
+                setTasks(tasks.filter(task => task.id !== id));
+            })
+            .catch(error => console.error('Error while removing the task', error));
+    };
+
   return (
     <div>
         <h1>To-do list</h1>
@@ -56,6 +64,7 @@ const TaskList = () => {
                     {!task.completed && (
                         <button onClick={() => handleMarkComplete(task.id)}>Terminer</button>
                     )}
+                    <button onClick={() => handleDeleteTask(task.id)}>Supprimer</button>
                 </li>
             ))}
             
